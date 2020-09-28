@@ -338,6 +338,7 @@ export default class FreeDraw extends FeatureGroup {
                 .classed(this.options.lineclass || 'leaflet-line', true)
                 .attr('d', lineFunction(lineData))
                 .attr('fill', this.options.fill || 'none')
+                .attr('fill-opacity', this.options.fillOpacity || 1)
                 .attr('stroke', this.options.stroke || 'black')
                 .attr('stroke-width', strokeWidth);
         };
