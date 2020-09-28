@@ -1,8 +1,8 @@
 import { Point } from 'leaflet';
 import { flatten, identical, complement, compose, head } from 'ramda';
 import { Clipper, PolyFillType } from 'clipper-lib';
-import createPolygon from 'turf-polygon';
-import isIntersecting from 'turf-intersect';
+import { polygon as createPolygon } from '@turf/helpers';
+import isIntersecting from '@turf/intersect';
 import { createFor, removeFor } from './Polygon';
 import { latLngsToClipperPoints } from './Simplify';
 

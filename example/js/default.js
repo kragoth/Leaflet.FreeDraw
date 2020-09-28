@@ -104,7 +104,7 @@ module('leafletApp', []).controller('MapController', $scope => {
 
             // Instantiate L.Map and the FreeDraw layer, passing in the default mode.
             const map = new L.Map(element[0], { doubleClickZoom: false }).setView([51.505, -0.09], 14);
-            const freeDraw = window.freeDraw = new FreeDraw({ mode: ALL });
+            const freeDraw = window.freeDraw = new FreeDraw({ mode: CREATE, leaveModeAfterCreate: true });
 
             // Add the tile layer and the FreeDraw layer.
             L.tileLayer(scope.TILE_URL).addTo(map);

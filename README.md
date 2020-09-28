@@ -1,9 +1,11 @@
 <img src="example/media/logo.png" width="400" />
 
+This is a fork of ['Wildhone/Leaflet.FreeDraw'](https://github.com/Wildhoney/Leaflet.FreeDraw). This fork fixes a few issues I was experiencing with touch support on the original library.
+
 > FreeDraw allows the free-hand drawing of shapes on your Leaflet.js map layer &ndash; providing an intuitive and familiar UX for creating geospatial boundaries similar to [Zoopla](http://www.zoopla.co.uk/for-sale/map/property/london/?include_retirement_homes=true&include_shared_ownership=true&new_homes=include&q=London&results_sort=newest_listings&search_source=home&pn=1&view_type=map) and others. Included out-of-the-box is the [concaving of polygons](http://ubicomp.algoritmi.uminho.pt/local/concavehull.html), polygon merging and simplifying, as well as the ability to add edges and modify existing shapes.
 > **Note:** For drawing polylines instead, try [`L.Pather`](https://github.com/Wildhoney/L.Pather).
 
-![Travis](http://img.shields.io/travis/Wildhoney/Leaflet.FreeDraw.svg?style=flat-square)
+<!--![Travis](http://img.shields.io/travis/Wildhoney/Leaflet.FreeDraw.svg?style=flat-square)-->
 &nbsp;
 ![npm](http://img.shields.io/npm/v/leaflet-freedraw.svg?style=flat-square)
 &nbsp;
@@ -11,8 +13,8 @@
 &nbsp;
 ![MIT License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat-square)
 
-* **npm:** `npm i leaflet-freedraw`
-* **Bower:** `bower i leaflet-freedraw`
+* **npm:** `npm i @kragoth235/leaflet-freedraw`
+* **Bower:** `bower i @kragoth235/leaflet-freedraw`
 * **JSFiddle:** https://jsfiddle.net/0dzhs5Lg/3/
 
 ## Table of Contents

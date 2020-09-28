@@ -78,6 +78,7 @@ export default class FreeDraw extends FeatureGroup {
     constructor(options = defaultOptions) {
         super();
         this.options = { ...defaultOptions, ...options };
+        this.mouseDownHandler = undefined;
     }
 
     /**
@@ -131,6 +132,12 @@ export default class FreeDraw extends FeatureGroup {
         delete map[cancelKey];
         delete map[instanceKey];
         delete map.simplifyPolygon;
+
+
+        if (!!this.mouseDownHandler) {
+            map.off('mousedown', this.mouseDownHandler);
+            map.off('touchstart', this.mouseDownHandler);
+        }
 
     }
 
@@ -219,10 +226,8 @@ export default class FreeDraw extends FeatureGroup {
         const mouseDown = event => {
 
             if (!(map[modesKey] & CREATE)) {
-
                 // Polygons can only be created when the mode includes create.
                 return;
-
             }
 
             /**
@@ -241,16 +246,25 @@ export default class FreeDraw extends FeatureGroup {
              * @return {void}
              */
             const mouseMove = event => {
+                // const x = performance.now();
+                // console.log('mouseMove');
 
                 // Resolve the pixel point to the latitudinal and longitudinal equivalent.
-                const point = map.mouseEventToContainerPoint(event.originalEvent);
+                let e = event.originalEvent;
+                if (event.originalEvent.touches) {
+                    e = event.originalEvent.touches[0];
+                }
+
+                const point = map.mouseEventToContainerPoint(e);
 
                 // Push each lat/lng value into the points set.
                 latLngs.add(map.containerPointToLatLng(point));
 
                 // Invoke the generator by passing in the starting point for the path.
                 lineIterator(new Point(point.x, point.y));
-
+                
+                // const y = performance.now();
+                // console.log('mouseMoveEnd: ' + (y-x).toString());
             };
 
             // Create the path when the user moves their cursor.
@@ -262,13 +276,13 @@ export default class FreeDraw extends FeatureGroup {
              * @return {Function}
              */
             const mouseUp = (_, create = true) => {
-
                 // Remove the ability to invoke `cancel`.
                 map[cancelKey] = () => {};
 
                 // Stop listening to the events.
                 map.off('mouseup', mouseUp);
                 map.off('mousemove', mouseMove);
+                map.off('touchmove', mouseMove);
                 'body' in document && document.body.removeEventListener('mouseleave', mouseUp);
 
                 // Clear the SVG canvas.
@@ -299,6 +313,7 @@ export default class FreeDraw extends FeatureGroup {
 
         };
 
+        this.mouseDownHandler = mouseDown;
         map.on('mousedown touchstart', mouseDown);
 
     }
@@ -319,9 +334,12 @@ export default class FreeDraw extends FeatureGroup {
             const lineData = [ lastPoint, toPoint ];
             lastPoint = toPoint;
             // Draw SVG line based on the last movement of the mouse's position.
-            svg.append('path').classed('leaflet-line', true)
-                .attr('d', lineFunction(lineData)).attr('fill', 'none')
-                .attr('stroke', 'black').attr('stroke-width', strokeWidth);
+            svg.append('path')
+                .classed(this.options.lineclass || 'leaflet-line', true)
+                .attr('d', lineFunction(lineData))
+                .attr('fill', this.options.fill || 'none')
+                .attr('stroke', this.options.stroke || 'black')
+                .attr('stroke-width', strokeWidth);
         };
     }
 
